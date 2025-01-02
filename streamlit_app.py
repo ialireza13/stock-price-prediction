@@ -1,8 +1,32 @@
+# streamlit_app.py
+
 import streamlit as st
 import pandas as pd
 import plotly.graph_objs as go
 from utils.helpers import load_processed_data, load_model, make_forecast, get_available_tickers
 from datetime import datetime, timedelta
+import os
+from data.fetch_data import fetch_and_save_stock_data
+from data.preprocess_data import preprocess_stock_data
+import joblib
+from models.train_model import train_prophet_model  # Ensure this function is importable
+
+# Function to ensure data is present
+def ensure_data():
+    tickers = ['AAPL', 'GOOGL', 'MSFT', 'AMZN', 'TSLA']
+    for ticker in tickers:
+        processed_file = os.path.join('data', 'processed', f"{ticker}_processed.csv")
+        model_file = os.path.join('models', f"{ticker}_model.pkl")
+        if not os.path.exists(processed_file):
+            # Fetch raw data
+            fetch_and_save_stock_data(ticker)
+            # Preprocess data
+            preprocess_stock_data(ticker)
+            # Train model
+            train_prophet_model(ticker)
+
+# Ensure data is available
+ensure_data()
 
 st.set_page_config(page_title="Stock Price Prediction and Analysis", layout="wide")
 

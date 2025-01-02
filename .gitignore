@@ -5,10 +5,6 @@ __pycache__/
 
 # Data files
 data/raw/
-data/processed/
-
-# Model files
-models/model.pkl
 
 # Environment variables
 .env

@@ -6,12 +6,25 @@ import joblib
 PROCESSED_DATA_DIR = os.path.join('data', 'processed')
 MODEL_DIR = 'models'
 
+# Ensure directories exist
+os.makedirs(PROCESSED_DATA_DIR, exist_ok=True)
+os.makedirs(MODEL_DIR, exist_ok=True)
+
 def load_processed_data(ticker):
     processed_file = os.path.join(PROCESSED_DATA_DIR, f"{ticker}_processed.csv")
     if not os.path.exists(processed_file):
         raise FileNotFoundError(f"Processed data for {ticker} not found.")
     df = pd.read_csv(processed_file)
-    # Convert 'Date' to datetime and ensure it's timezone-naive
+    # Ensure 'Date' is datetime and timezone-naive
+    df['Date'] = pd.to_datetime(df['Date'], utc=True).dt.tz_convert(None)
+    return df
+
+def load_processed_data(ticker):
+    processed_file = os.path.join(PROCESSED_DATA_DIR, f"{ticker}_processed.csv")
+    if not os.path.exists(processed_file):
+        raise FileNotFoundError(f"Processed data for {ticker} not found.")
+    df = pd.read_csv(processed_file)
+    # Ensure 'Date' is datetime and timezone-naive
     df['Date'] = pd.to_datetime(df['Date'], utc=True).dt.tz_convert(None)
     return df
 
