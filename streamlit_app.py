@@ -10,7 +10,12 @@ from models.train_model import train_prophet_model
 
 # Function to ensure data is present
 def ensure_data():
-    tickers = ['AAPL', 'GOOGL', 'MSFT', 'AMZN', 'TSLA']
+    tickers = [
+        'AAPL', 'GOOGL', 'MSFT', 'AMZN', 'TSLA',
+        'FB', 'NFLX', 'NVDA', 'JPM', 'V', 
+        'DIS', 'ADBE', 'PYPL', 'INTC', 'CSCO',
+        'CMCSA', 'PEP', 'COST', 'AMGN', 'T'
+    ]
     for ticker in tickers:
         processed_file = os.path.join('data', 'processed', f"{ticker}_processed.csv")
         model_file = os.path.join('models', f"{ticker}_model.pkl")
@@ -34,6 +39,10 @@ st.sidebar.header("User Input Parameters")
 
 def user_input_features():
     tickers = get_available_tickers()
+    if not tickers:
+        st.error("No tickers available. Please ensure data is fetched and processed.")
+        st.stop()
+    
     ticker = st.sidebar.selectbox("Select Stock Ticker", tickers)
     
     start_date = st.sidebar.date_input("Start Date", datetime(2020, 1, 1))
@@ -46,7 +55,12 @@ def user_input_features():
 ticker, start_date, end_date, prediction_days = user_input_features()
 
 # Load data
-df = load_processed_data(ticker)
+try:
+    df = load_processed_data(ticker)
+except FileNotFoundError as e:
+    st.error(str(e))
+    st.stop()
+
 df['Date'] = pd.to_datetime(df['Date'])
 
 # Filter data based on user input
@@ -78,7 +92,12 @@ st.plotly_chart(fig3, use_container_width=True)
 # Prediction
 st.subheader(f"Stock Price Prediction for next {prediction_days} days")
 
-model = load_model(ticker)
+try:
+    model = load_model(ticker)
+except FileNotFoundError as e:
+    st.error(str(e))
+    st.stop()
+
 forecast = make_forecast(model, periods=prediction_days)
 
 # Plotting Forecast

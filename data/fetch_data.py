@@ -3,8 +3,13 @@ import yfinance as yf
 import pandas as pd
 from datetime import datetime
 
-# List of stock tickers to fetch
-STOCKS = ['AAPL', 'GOOGL', 'MSFT', 'AMZN', 'TSLA']
+# Expanded list of stock tickers
+STOCKS = [
+    'AAPL', 'GOOGL', 'MSFT', 'AMZN', 'TSLA',
+    'FB', 'NFLX', 'NVDA', 'JPM', 'V', 
+    'DIS', 'ADBE', 'PYPL', 'INTC', 'CSCO',
+    'CMCSA', 'PEP', 'COST', 'AMGN', 'T'
+]
 
 # Define the date range
 START_DATE = '2010-01-01'

@@ -11,6 +11,9 @@ def preprocess_stock_data(ticker):
     
     df = pd.read_csv(raw_file)
     
+    # Convert 'Date' to datetime and ensure it's timezone-naive
+    df['Date'] = pd.to_datetime(df['Date'], utc=True).dt.tz_convert(None)
+    
     # Handle missing values
     df.fillna(method='ffill', inplace=True)
     
@@ -34,7 +37,6 @@ def preprocess_stock_data(ticker):
     print(f"Processed data saved to {processed_file}")
 
 def main():
-    processed_data_dir = PROCESSED_DATA_DIR
     for file in os.listdir(RAW_DATA_DIR):
         if file.endswith('.csv'):
             ticker = file.split('.')[0]

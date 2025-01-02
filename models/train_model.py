@@ -14,14 +14,9 @@ def train_prophet_model(ticker):
     # Convert 'Date' to datetime and ensure it's timezone-naive
     df['Date'] = pd.to_datetime(df['Date'], utc=True).dt.tz_convert(None)
     
-    # Verify that 'Date' is timezone-naive
-    if df['Date'].dt.tz is not None:
-        raise ValueError(f"'Date' column for {ticker} is still timezone-aware.")
-    
     # Prepare data for Prophet
     prophet_df = df[['Date', 'Close']].rename(columns={'Date': 'ds', 'Close': 'y'})
     
-    # Debug: Check the first few rows
     print(f"Training Prophet model for {ticker}")
     
     model = Prophet()
