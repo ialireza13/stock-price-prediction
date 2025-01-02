@@ -4,10 +4,15 @@ import plotly.graph_objs as go
 from utils.helpers import load_processed_data, load_model, make_forecast, get_available_tickers
 from datetime import datetime, timedelta
 import os
+import logging
 from data.fetch_data import fetch_and_save_stock_data
 from data.preprocess_data import preprocess_stock_data
 from models.train_model import train_prophet_model
+# Configure logger
+logging.basicConfig(level=logging.INFO)
+logger = logging.getLogger(__name__)
 
+# Function to ensure data is present
 # Function to ensure data is present
 def ensure_data():
     tickers = [
@@ -19,13 +24,15 @@ def ensure_data():
     for ticker in tickers:
         processed_file = os.path.join('data', 'processed', f"{ticker}_processed.csv")
         model_file = os.path.join('models', f"{ticker}_model.pkl")
-        if not os.path.exists(processed_file):
-            # Fetch raw data
-            fetch_and_save_stock_data(ticker)
-            # Preprocess data
-            preprocess_stock_data(ticker)
-            # Train model
-            train_prophet_model(ticker)
+        if not os.path.exists(processed_file) or not os.path.exists(model_file):
+            logger.info(f"Preparing data and model for {ticker}...")
+            try:
+                fetch_and_save_stock_data(ticker)
+                preprocess_stock_data(ticker)
+                train_prophet_model(ticker)
+                logger.info(f"Data and model for {ticker} are ready.")
+            except Exception as e:
+                logger.error(f"Failed to prepare data for {ticker}: {e}")
 
 # Ensure data is available
 ensure_data()
