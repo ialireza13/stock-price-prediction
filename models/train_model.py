@@ -11,6 +11,11 @@ def train_prophet_model(ticker):
     processed_file = os.path.join(PROCESSED_DATA_DIR, f"{ticker}_processed.csv")
     df = pd.read_csv(processed_file)
     
+    # Check if the dataframe has at least 2 non-NaN rows
+    if df.dropna().shape[0] < 2:
+        print(f"Insufficient data for {ticker}. Skipping model training.")
+        return
+    
     # Convert 'Date' to datetime and ensure it's timezone-naive
     df['Date'] = pd.to_datetime(df['Date'], utc=True).dt.tz_convert(None)
     
