@@ -1,0 +1,20 @@
+# Byte-compiled / optimized / DLL files
+__pycache__/
+*.py[cod]
+*$py.class
+
+# Data files
+data/raw/
+data/processed/
+
+# Model files
+models/model.pkl
+
+# Environment variables
+.env
+
+# Streamlit cache
+.streamlit/
+
+# VS Code settings
+.vscode/
