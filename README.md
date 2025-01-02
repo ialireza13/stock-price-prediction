@@ -12,7 +12,7 @@ An interactive web application that visualizes historical stock data, computes t
 
 ## 💡 Demo
 
-[Live Demo](#)
+[Live Demo](https://stockpriceprophet.streamlit.app)
 
 ## 🛠️ Installation
 
