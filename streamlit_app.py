@@ -1,5 +1,3 @@
-# streamlit_app.py
-
 import streamlit as st
 import pandas as pd
 import plotly.graph_objs as go
@@ -8,8 +6,7 @@ from datetime import datetime, timedelta
 import os
 from data.fetch_data import fetch_and_save_stock_data
 from data.preprocess_data import preprocess_stock_data
-import joblib
-from models.train_model import train_prophet_model  # Ensure this function is importable
+from models.train_model import train_prophet_model
 
 # Function to ensure data is present
 def ensure_data():
@@ -112,5 +109,5 @@ with col3:
 # Footer
 st.markdown("""
 ---
-Created by [Your Name](https://github.com/yourusername)
+Created by [Alireza Hashemi](https://github.com/ialireza13)
 """)
