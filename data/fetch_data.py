@@ -3,7 +3,6 @@ import yfinance as yf
 import pandas as pd
 from datetime import datetime
 
-# Expanded list of stock tickers (updated 'FB' to 'META')
 STOCKS = [
     'AAPL', 'GOOGL', 'MSFT', 'AMZN', 'TSLA',
     'META', 'NFLX', 'NVDA', 'JPM', 'V', 

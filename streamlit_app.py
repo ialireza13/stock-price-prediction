@@ -13,11 +13,10 @@ logging.basicConfig(level=logging.INFO)
 logger = logging.getLogger(__name__)
 
 # Function to ensure data is present
-# Function to ensure data is present
 def ensure_data():
     tickers = [
         'AAPL', 'GOOGL', 'MSFT', 'AMZN', 'TSLA',
-        'FB', 'NFLX', 'NVDA', 'JPM', 'V', 
+        'META', 'NFLX', 'NVDA', 'JPM', 'V', 
         'DIS', 'ADBE', 'PYPL', 'INTC', 'CSCO',
         'CMCSA', 'PEP', 'COST', 'AMGN', 'T'
     ]
